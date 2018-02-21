@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+    <!-- vertex shader -->
+    <script id="3d-vertex-shader" type="x-shader/x-vertex">
+      attribute vec4 a_position;
+      attribute vec4 a_color;
+      uniform mat4 u_matrix;
+      varying vec4 v_color;
+      void main() {
+        gl_Position = u_matrix * a_position;
+        v_color = a_color;
+      }
+      </script>
+
+    <!-- fragment shader -->
+    <script id="3d-fragment-shader" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec4 v_color;
+      uniform vec4 u_colorMult;
+      uniform vec4 u_colorOffset;
+      void main() {
+        gl_FragColor = v_color * u_colorMult + u_colorOffset;
+      }
+      </script>
+
+    <head>
+        <meta charset="utf-8">
+        <!--<title>WebGl first exercise </title>-->
+        <meta name="Interactivity WebGL" content="The HTML5 Herald">
+        <meta name="zubcarz@gmail.com" content="SitePoint">
+        <link rel="stylesheet" href="css/styles.css?v=1.0">
+    </head>
+    <body>
+
+    <canvas id="canvas" width="640" height="480">
+            Not support element HTML5 <code>&lt;canvas&gt;</code>.
+    </canvas>
+    <div id="overlay2">
+        Animation Active: <input  onclick="activeAnimationAction()" type="checkbox" id="activeAnimation">
+        <button type="button" onclick="activeFrontCamera()">Front camera</button>
+        <button type="button" onclick="activeIsometric()">Isometric</button>
+        <div> zPosition: <span id="z_position"></span><input type="range" min="2" max="20" value="6" class="slider" id="z_range"></div>
+        <div> Field of view: <span id="field_of_view"></span><input type="range" min="20" max="120" value="45" class="slider" id="f_range"></div>
+        <div> Rotation 1 : <span id="rotation_1"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_1_range"></div>
+        <div> Rotation 2 : <span id="rotation_2"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_2_range"></div>
+        <div> Rotation 3 : <span id="rotation_3"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_3_range"></div>
+        <div> Rotation 4 : <span id="rotation_4"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_4_range"></div>
+        <div> Rotation 5 : <span id="rotation_5"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_5_range"></div>
+        <div> Rotation 6 : <span id="rotation_6"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_6_range"></div>
+        <div> Rotation 7 : <span id="rotation_7"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_7_range"></div>
+        <div> Rotation 8 : <span id="rotation_8"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_8_range"></div>
+        <div> Rotation 9 : <span id="rotation_9"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_9_range"></div>
+
+        <div> Speed Node 0 : <span id="speed_node_1"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_7_range"></div>
+        <div> Speed Node 1 : <span id="speed_node_2"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_8_range"></div>
+        <div> Speed Node 2: <span id="speed_node_3"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_9_range"></div>
+    </div>
+
+    <div id="overlay">
+        <div> x : <span id="x_position"></span></div>
+        <div> y : <span id="y_position"></span></div>
+        <div> width : <span id="width_canvas"></span></div>
+        <div> height : <span id="height_canvas"></span></div>
+    </div>
+    </body>
+    <script src="js/gl-matrix.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-helper.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/primitives.js"></script>
+    <script src="js/main.js"></script>
+</html>
+
