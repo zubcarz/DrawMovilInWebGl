@@ -16,9 +16,36 @@ var canvas;
 var gl;
 var objectsRelations;
 var layers;
-var speedRotation = 0.01;
+
+var baseSpeed = 0.01;
+var speedRotationLayer1 = 0;
+var speedRotationLayer2 = 0;
+var speedRotationLayer3 = 0;
+var speedRotationLayer4 = 0;
 
 var viewProjectionMatrix;
+
+var speed1Label = document.getElementById("speed_node_1");
+var speed1Node = document.createTextNode("");
+speed1Label.appendChild(speed1Node);
+var speed1Slider = document.getElementById("speed_node_1_range");
+
+var speed2Label = document.getElementById("speed_node_2");
+var speed2Node = document.createTextNode("");
+speed2Label.appendChild(speed2Node);
+var speed2Slider = document.getElementById("speed_node_2_range");
+
+var speed3Label = document.getElementById("speed_node_3");
+var speed3Node = document.createTextNode("");
+speed3Label.appendChild(speed3Node);
+var speed3Slider = document.getElementById("speed_node_3_range");
+
+var speed4Label = document.getElementById("speed_node_4");
+var speed4Node = document.createTextNode("");
+speed4Label.appendChild(speed4Node);
+var speed4Slider = document.getElementById("speed_node_4_range");
+
+
 
 var Node = function() {
     this.children = [];
@@ -95,13 +122,6 @@ function main() {
     function emod(x, n) {
         return x >= 0 ? (x % n) : ((n - (-x % n)) % n);
     };
-
-
-    var cameraAngleRadians = degToRad(0);
-    var cameraHeight = 50;
-
-    var objectsToDraw = [];
-    var objects = [];
 
     // Let's make all the nodes
     var baseMobilNode = new Node();
@@ -255,7 +275,7 @@ function main() {
         bufferInfo: sphereBufferInfo,
     };
 
-    // connect the celetial objects
+    // connect objects
     nB1.setParent(baseMobilNode);
     mobilLayer1.setParent(baseMobilNode);
     nB1_1.setParent(mobilLayer1);
@@ -320,13 +340,6 @@ function main() {
     requestAnimationFrame(drawScene);
 }
 
-function activeAnimationAction(){
-    activeAnimation = document.getElementById("activeAnimation").checked;
-    if(activeAnimation){
-        requestAnimationFrame(drawScene);
-    }
-}
-
 // Draw the scene.
 function drawScene( time) {
     time *= 0.0005;
@@ -346,10 +359,17 @@ function drawScene( time) {
 
 
     // update the local matrices for each object.
-    m4.multiply(m4.zRotation(speedRotation), layers.layer0.localMatrix, layers.layer0.localMatrix);
-    m4.multiply(m4.zRotation( 2 * speedRotation), layers.layer1.localMatrix, layers.layer1.localMatrix);
-    m4.multiply(m4.zRotation( 3 * speedRotation), layers.layer2.localMatrix, layers.layer2.localMatrix);
-    m4.multiply(m4.zRotation( 3 * speedRotation), layers.layer3.localMatrix, layers.layer3.localMatrix);
+    if (activeAnimation) {
+        m4.multiply(m4.zRotation(baseSpeed), layers.layer0.localMatrix, layers.layer0.localMatrix);
+        m4.multiply(m4.zRotation(2 * baseSpeed), layers.layer1.localMatrix, layers.layer1.localMatrix);
+        m4.multiply(m4.zRotation(3 * baseSpeed), layers.layer2.localMatrix, layers.layer2.localMatrix);
+        m4.multiply(m4.zRotation(3 * baseSpeed), layers.layer3.localMatrix, layers.layer3.localMatrix);
+    }else{
+        m4.multiply(m4.zRotation(speedRotationLayer1), layers.layer0.localMatrix, layers.layer0.localMatrix);
+        m4.multiply(m4.zRotation(speedRotationLayer2), layers.layer1.localMatrix, layers.layer1.localMatrix);
+        m4.multiply(m4.zRotation(speedRotationLayer3), layers.layer2.localMatrix, layers.layer2.localMatrix);
+        m4.multiply(m4.zRotation(speedRotationLayer4), layers.layer3.localMatrix, layers.layer3.localMatrix);
+    }
 
     // spin the earth
     /*m4.multiply(m4.yRotation(0.05), nB1_1.localMatrix, nB1_1.localMatrix);
@@ -394,10 +414,7 @@ function drawScene( time) {
         // Draw
         gl.drawArrays(gl.TRIANGLES, 0, bufferInfo.numElements);
     });
-
-    if (activeAnimation) {
-        requestAnimationFrame(drawScene);
-    }
+    requestAnimationFrame(drawScene);
 }
 
 function changeViewMatrix(cameraPosition){
@@ -430,6 +447,44 @@ function activeIsometric() {
 
 function degToRad(d) {
     return d * Math.PI / 180;
+}
+
+//Sliders
+speed1Slider.oninput = function() {
+    speedRotationLayer1 = this.value/1000 ;
+    speed1Label.nodeValue = this.value/1000;
+};
+
+speed2Slider.oninput = function() {
+    speedRotationLayer2 = this.value/1000 ;
+    speed2Label.nodeValue = this.value/1000;
+};
+
+speed3Slider.oninput = function() {
+    speedRotationLayer3 = this.value/1000 ;
+    speed3Label.nodeValue = this.value/1000;
+};
+
+speed4Slider.oninput = function() {
+    speedRotationLayer4 = this.value/1000 ;
+    speed4Label.nodeValue = this.value/1000;
+};
+
+function setSliders(value){
+    speed1Slider.value = value;
+    speed2Slider.value = value;
+    speed3Slider.value = value;
+    speed4Slider.value = value;
+
+    speedRotationLayer1 = value;
+    speedRotationLayer2 = value;
+    speedRotationLayer3 = value;
+    speedRotationLayer4 = value;
+}
+
+function activeAnimationAction(){
+    activeAnimation = document.getElementById("activeAnimation").checked;
+    setSliders(0);
 }
 
 //Start program
