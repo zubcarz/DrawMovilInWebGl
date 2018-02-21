@@ -1,5 +1,6 @@
 "use strict";
 
+//Colors
 const red = [245/255, 153/255, 132/255, 1];
 const blue = [125/255, 149/255, 179/255, 1];
 const purple = [84/255, 64/255, 128/255, 1];
@@ -7,6 +8,9 @@ const yellow = [245/255, 233/255, 112/255, 1];
 const green = [7/255, 140/255, 78/255, 1];
 const orange = [224/255, 80/255, 36/255, 1];
 const grey = [0.6, 0.6, 0.6, 1];
+const black = [0.17, 0.17, 0.17, 1];
+
+
 const distanceToCenter = 10;
 const distanceAxis = 5;
 
@@ -113,6 +117,8 @@ function main() {
     };
 
     var sphereBufferInfo = createFlattenedVertices(gl, primitives.createSphereVertices(1, 6, 6));
+    var barBufferInfo = createFlattenedVertices(gl, primitives.createCubeVertices(1));
+
     // setup GLSL program
     var programInfo = webglUtils.createProgramInfo(gl, ["3d-vertex-shader", "3d-fragment-shader"]);
 
@@ -138,11 +144,50 @@ function main() {
     nB1.localMatrix = m4.scaling(1, 1, 1);
     nB1.drawInfo = {
         uniforms: {
-            u_colorOffset: green,
-            u_colorMult:   [0.4, 0.4, 0, 1],
+            u_colorOffset: yellow,
+            u_colorMult:  [0 , 0, 0, 1],
         },
         programInfo: programInfo,
-        bufferInfo: sphereBufferInfo,
+        bufferInfo: sphereBufferInfo
+    };
+
+    var barB1 = new Node();
+    var scaleB1 = m4.scaling(0.25, 0.25, distanceAxis);
+    var translationB1= m4.translation(0, 0, distanceAxis/8);
+    barB1.localMatrix = m4.multiply( scaleB1, translationB1);
+    barB1.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barB2 = new Node();
+    var scaleB2 = m4.scaling(distanceToCenter * 2, 0.25, 0.25);
+    var translationB2= m4.translation(0, 0, 0);
+    barB2.localMatrix = m4.multiply( scaleB2, translationB2);
+    barB2.drawInfo = {
+        uniforms: {
+            u_colorOffset: green,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barB3 = new Node();
+    var scale3 = m4.scaling(0.25,  ( distanceToCenter * 2) *  (2/3), 0.25);
+    var translation3 = m4.translation(0, 0, 0);
+    barB3.localMatrix = m4.multiply( scale3, translation3);
+    barB3.drawInfo = {
+        uniforms: {
+            u_colorOffset: purple,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
     };
 
     var nB1_1 = new Node();
@@ -150,7 +195,7 @@ function main() {
     nB1_1.drawInfo = {
         uniforms: {
             u_colorOffset: red,
-            u_colorMult:   [0.4, 0.4, 0, 1]
+            u_colorMult:  [0 , 0, 0, 1]
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo
@@ -161,8 +206,8 @@ function main() {
     nB1_2.localMatrix = m4.translation(distanceToCenter, 0, -distanceAxis);
     nB1_2.drawInfo = {
         uniforms: {
-            u_colorOffset: red,
-            u_colorMult:   [0.4, 0.4, 0, 1]
+            u_colorOffset: purple,
+            u_colorMult:  [0.2 , 0.2, 0.2, 1]
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo
@@ -173,8 +218,8 @@ function main() {
     nB1_3.localMatrix = m4.translation(-distanceToCenter, 0, -distanceAxis);
     nB1_3.drawInfo = {
         uniforms: {
-            u_colorOffset: red,
-            u_colorMult:   [0.4, 0.4, 0, 1]
+            u_colorOffset: yellow,
+            u_colorMult:  [0 , 0, 0, 1]
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo
@@ -186,7 +231,7 @@ function main() {
     nB1_4.drawInfo = {
         uniforms: {
             u_colorOffset: red,
-            u_colorMult:   [0.4, 0.4, 0, 1]
+            u_colorMult:  [0 , 0, 0, 1]
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo
@@ -197,8 +242,8 @@ function main() {
     nB1_5.localMatrix = m4.translation(0, -distanceToCenter, -distanceAxis);
     nB1_5.drawInfo = {
         uniforms: {
-            u_colorOffset: red,
-            u_colorMult:   [0.4, 0.4, 0, 1],
+            u_colorOffset: orange,
+            u_colorMult:  [0 , 0, 0, 1],
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo,
@@ -278,7 +323,12 @@ function main() {
     // connect objects
     nB1.setParent(baseMobilNode);
     mobilLayer1.setParent(baseMobilNode);
+
     nB1_1.setParent(mobilLayer1);
+    barB1.setParent(nB1_1);
+    barB2.setParent(nB1_1);
+    barB3.setParent(nB1_1);
+
     nB1_2.setParent(mobilLayer1);
     nB1_3.setParent(mobilLayer1);
     nB1_4.setParent(mobilLayer1);
@@ -306,7 +356,10 @@ function main() {
         nB1_2_3,
         nB1_3_1,
         nB1_3_2,
-        nB1_3_3
+        nB1_3_3,
+        barB1,
+        barB2,
+        barB3,
     ];
 
     var objectsToDraw = [
@@ -323,6 +376,9 @@ function main() {
         nB1_3_1.drawInfo,
         nB1_3_2.drawInfo,
         nB1_3_3.drawInfo,
+        barB1.drawInfo,
+        barB2.drawInfo,
+        barB3.drawInfo
     ];
 
     layers = {
@@ -418,8 +474,6 @@ function drawScene( time) {
 }
 
 function changeViewMatrix(cameraPosition){
-    console.log(cameraPosition);
-
     // Compute the projection matrix
     var fieldOfViewRadians = degToRad(60);
     var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
