@@ -158,7 +158,7 @@ function main() {
 
     var nB1_2 = new Node();
     nB1_2.localMatrix = m4.scaling(1, 1, 1);
-    nB1_2.localMatrix = m4.translation(distanceToCenter, 0, 0);
+    nB1_2.localMatrix = m4.translation(distanceToCenter, 0, -distanceAxis);
     nB1_2.drawInfo = {
         uniforms: {
             u_colorOffset: red,
@@ -170,7 +170,7 @@ function main() {
 
     var nB1_3 = new Node();
     nB1_3.localMatrix = m4.scaling(1, 1, 1);
-    nB1_3.localMatrix = m4.translation(-distanceToCenter, 0, 0);
+    nB1_3.localMatrix = m4.translation(-distanceToCenter, 0, -distanceAxis);
     nB1_3.drawInfo = {
         uniforms: {
             u_colorOffset: red,
@@ -182,7 +182,7 @@ function main() {
 
     var nB1_4 = new Node();
     nB1_4.localMatrix = m4.scaling(1, 1, 1);
-    nB1_4.localMatrix = m4.translation(0, distanceToCenter , 0);
+    nB1_4.localMatrix = m4.translation(0, distanceToCenter , -distanceAxis);
     nB1_4.drawInfo = {
         uniforms: {
             u_colorOffset: red,
@@ -194,7 +194,7 @@ function main() {
 
     var nB1_5 = new Node();
     nB1_5.localMatrix = m4.scaling(1, 1, 1);
-    nB1_5.localMatrix = m4.translation(0, -distanceToCenter, 0);
+    nB1_5.localMatrix = m4.translation(0, -distanceToCenter, -distanceAxis);
     nB1_5.drawInfo = {
         uniforms: {
             u_colorOffset: red,
