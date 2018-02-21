@@ -21,7 +21,7 @@ var gl;
 var objectsRelations;
 var layers;
 
-var baseSpeed = 0.01;
+var baseSpeed = 0.005;
 var speedRotationLayer1 = 0;
 var speedRotationLayer2 = 0;
 var speedRotationLayer3 = 0;
@@ -49,7 +49,7 @@ var speed4Node = document.createTextNode("");
 speed4Label.appendChild(speed4Node);
 var speed4Slider = document.getElementById("speed_node_4_range");
 
-
+var scaleSpeed = 2000;
 
 var Node = function() {
     this.children = [];
@@ -178,7 +178,7 @@ function main() {
     };
 
     var barB3 = new Node();
-    var scale3 = m4.scaling(0.25,  ( distanceToCenter * 2) *  (2/3), 0.25);
+    var scale3 = m4.scaling(0.25,  ( distanceToCenter * 2) , 0.25);
     var translation3 = m4.translation(0, 0, 0);
     barB3.localMatrix = m4.multiply( scale3, translation3);
     barB3.drawInfo = {
@@ -213,6 +213,20 @@ function main() {
         bufferInfo: sphereBufferInfo
     };
 
+    var barB2_1 = new Node();
+    var scaleB2_1 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB2_1= m4.translation(0, 0, distanceAxis/8);
+    barB2_1.localMatrix = m4.multiply( scaleB2_1, translationB2_1);
+    barB2_1.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+
     var nB1_3 = new Node();
     nB1_3.localMatrix = m4.scaling(1, 1, 1);
     nB1_3.localMatrix = m4.translation(-distanceToCenter, 0, -distanceAxis);
@@ -225,6 +239,20 @@ function main() {
         bufferInfo: sphereBufferInfo
     };
 
+    var barB2_2 = new Node();
+    var scaleB2_2 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB2_2= m4.translation(0, 0, distanceAxis/8);
+    barB2_2.localMatrix = m4.multiply( scaleB2_2, translationB2_2);
+    barB2_2.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+
     var nB1_4 = new Node();
     nB1_4.localMatrix = m4.scaling(1, 1, 1);
     nB1_4.localMatrix = m4.translation(0, distanceToCenter , -distanceAxis);
@@ -235,6 +263,19 @@ function main() {
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo
+    };
+
+    var barB2_3 = new Node();
+    var scaleB2_3 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB2_3= m4.translation(0, 0, distanceAxis/8);
+    barB2_3.localMatrix = m4.multiply( scaleB2_3, translationB2_3);
+    barB2_3.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
     };
 
     var nB1_5 = new Node();
@@ -249,6 +290,19 @@ function main() {
         bufferInfo: sphereBufferInfo,
     };
 
+    var barB2_4= new Node();
+    var scaleB2_4 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB2_4= m4.translation(0, 0, distanceAxis/8);
+    barB2_4.localMatrix = m4.multiply( scaleB2_4, translationB2_4);
+    barB2_4.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
     var nB1_2_1 = new Node();
     nB1_2_1.localMatrix = m4.scaling(1, 1, 1);
     nB1_2_1.drawInfo = {
@@ -258,6 +312,19 @@ function main() {
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo,
+    };
+
+    var barB3_1= new Node();
+    var scaleB3_1 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB3_1= m4.translation(0, 0, distanceAxis/8);
+    barB3_1.localMatrix = m4.multiply( scaleB3_1, translationB3_1);
+    barB3_1.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
     };
 
     var nB1_2_2 = new Node();
@@ -270,6 +337,19 @@ function main() {
         },
         programInfo: programInfo,
         bufferInfo: sphereBufferInfo,
+    };
+
+    var barB3_2= new Node();
+    var scaleB3_2 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB3_2= m4.translation(0, 0, distanceAxis/8);
+    barB3_2.localMatrix = m4.multiply( scaleB3_2, translationB3_2);
+    barB3_2.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
     };
 
     var nB1_2_3 = new Node();
@@ -320,6 +400,83 @@ function main() {
         bufferInfo: sphereBufferInfo,
     };
 
+    var barB4_1= new Node();
+    var scaleB4_1 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB4_1= m4.translation(0, 0, distanceAxis/8);
+    barB4_1.localMatrix = m4.multiply( scaleB4_1, translationB4_1);
+    barB4_1.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barB4_2= new Node();
+    var scaleB4_2 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB4_2= m4.translation(0, 0, distanceAxis/8);
+    barB4_2.localMatrix = m4.multiply( scaleB4_2, translationB4_2);
+    barB4_2.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barB4_3 = new Node();
+    var scaleB4_3 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB4_3= m4.translation(0, 0, distanceAxis/8);
+    barB4_3.localMatrix = m4.multiply( scaleB4_3, translationB4_3);
+    barB4_3.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barB4_4= new Node();
+    var scaleB4_4 = m4.scaling(0.25, 0.25, distanceAxis - 0.5);
+    var translationB4_4= m4.translation(0, 0, distanceAxis/8);
+    barB4_4.localMatrix = m4.multiply( scaleB4_4, translationB4_4);
+    barB4_4.drawInfo = {
+        uniforms: {
+            u_colorOffset: black,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var scaleT = m4.scaling( distanceToCenter,  0.25, 0.25);
+    var translationT = m4.translation(0, 0, 0);
+
+    var barT1 = new Node();
+    barT1.localMatrix = m4.multiply( scaleT, translationT);
+    barT1.drawInfo = {
+        uniforms: {
+            u_colorOffset: green,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
+    var barT2 = new Node();
+    barT2.localMatrix = m4.multiply( scaleT, translationT);
+    barT2.drawInfo = {
+        uniforms: {
+            u_colorOffset: purple,
+            u_colorMult:   [0, 0, 0, 1]
+        },
+        programInfo: programInfo,
+        bufferInfo: barBufferInfo
+    };
+
     // connect objects
     nB1.setParent(baseMobilNode);
     mobilLayer1.setParent(baseMobilNode);
@@ -328,6 +485,10 @@ function main() {
     barB1.setParent(nB1_1);
     barB2.setParent(nB1_1);
     barB3.setParent(nB1_1);
+    barB2_1.setParent(nB1_2);
+    barB2_2.setParent(nB1_3);
+    barB2_3.setParent(nB1_4);
+    barB2_4.setParent(nB1_5);
 
     nB1_2.setParent(mobilLayer1);
     nB1_3.setParent(mobilLayer1);
@@ -339,10 +500,21 @@ function main() {
     nB1_2_2.setParent(mobilLayer1_1);
     nB1_2_3.setParent(mobilLayer1_1);
 
+    barB3_1.setParent(nB1_2_1);
+    barB3_2.setParent(nB1_3_1);
+
     mobilLayer1_2.setParent(nB1_2);
     nB1_3_1.setParent(mobilLayer1_2);
     nB1_3_2.setParent(mobilLayer1_2);
     nB1_3_3.setParent(mobilLayer1_2);
+
+    barB4_1.setParent(nB1_2_2);
+    barB4_2.setParent(nB1_2_3);
+    barB4_3.setParent(nB1_3_2);
+    barB4_4.setParent(nB1_3_3);
+
+    barT1.setParent(nB1_2_1);
+    barT2.setParent(nB1_3_1);
 
     var objects = [
         nB1,
@@ -360,6 +532,18 @@ function main() {
         barB1,
         barB2,
         barB3,
+        barB2_1,
+        barB2_2,
+        barB2_3,
+        barB2_4,
+        barB3_1,
+        barB3_2,
+        barB4_1,
+        barB4_2,
+        barB4_3,
+        barB4_4,
+        barT1,
+        barT2
     ];
 
     var objectsToDraw = [
@@ -378,7 +562,19 @@ function main() {
         nB1_3_3.drawInfo,
         barB1.drawInfo,
         barB2.drawInfo,
-        barB3.drawInfo
+        barB3.drawInfo,
+        barB2_1.drawInfo,
+        barB2_2.drawInfo,
+        barB2_3.drawInfo,
+        barB2_4.drawInfo,
+        barB3_1.drawInfo,
+        barB3_2.drawInfo,
+        barB4_1.drawInfo,
+        barB4_2.drawInfo,
+        barB4_3.drawInfo,
+        barB4_4.drawInfo,
+        barT1.drawInfo,
+        barT2.drawInfo
     ];
 
     layers = {
@@ -417,9 +613,9 @@ function drawScene( time) {
     // update the local matrices for each object.
     if (activeAnimation) {
         m4.multiply(m4.zRotation(baseSpeed), layers.layer0.localMatrix, layers.layer0.localMatrix);
-        m4.multiply(m4.zRotation(2 * baseSpeed), layers.layer1.localMatrix, layers.layer1.localMatrix);
+        m4.multiply(m4.zRotation( - 2 * baseSpeed), layers.layer1.localMatrix, layers.layer1.localMatrix);
         m4.multiply(m4.zRotation(3 * baseSpeed), layers.layer2.localMatrix, layers.layer2.localMatrix);
-        m4.multiply(m4.zRotation(3 * baseSpeed), layers.layer3.localMatrix, layers.layer3.localMatrix);
+        m4.multiply(m4.zRotation( - 3 * baseSpeed), layers.layer3.localMatrix, layers.layer3.localMatrix);
     }else{
         m4.multiply(m4.zRotation(speedRotationLayer1), layers.layer0.localMatrix, layers.layer0.localMatrix);
         m4.multiply(m4.zRotation(speedRotationLayer2), layers.layer1.localMatrix, layers.layer1.localMatrix);
@@ -505,23 +701,23 @@ function degToRad(d) {
 
 //Sliders
 speed1Slider.oninput = function() {
-    speedRotationLayer1 = this.value/1000 ;
-    speed1Label.nodeValue = this.value/1000;
+    speedRotationLayer1 = this.value/scaleSpeed ;
+    speed1Label.nodeValue = this.value/scaleSpeed;
 };
 
 speed2Slider.oninput = function() {
-    speedRotationLayer2 = this.value/1000 ;
-    speed2Label.nodeValue = this.value/1000;
+    speedRotationLayer2 = this.value/scaleSpeed ;
+    speed2Label.nodeValue = this.value/scaleSpeed;
 };
 
 speed3Slider.oninput = function() {
-    speedRotationLayer3 = this.value/1000 ;
-    speed3Label.nodeValue = this.value/1000;
+    speedRotationLayer3 = this.value/scaleSpeed ;
+    speed3Label.nodeValue = this.value/scaleSpeed;
 };
 
 speed4Slider.oninput = function() {
-    speedRotationLayer4 = this.value/1000 ;
-    speed4Label.nodeValue = this.value/1000;
+    speedRotationLayer4 = this.value/scaleSpeed ;
+    speed4Label.nodeValue = this.value/scaleSpeed;
 };
 
 function setSliders(value){
