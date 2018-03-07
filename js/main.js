@@ -9,10 +9,19 @@ const green = [7/255, 140/255, 78/255, 1];
 const orange = [224/255, 80/255, 36/255, 1];
 const grey = [0.6, 0.6, 0.6, 1];
 const black = [0.17, 0.17, 0.17, 1];
-
+var isCameraRotation = false;
 
 const distanceToCenter = 10;
 const distanceAxis = 5;
+
+var currentTarget;
+var currentCameraPosition;
+
+var xViewAngle = 1.5;
+var afterMousePositionX=0;
+var yViewAngle = 0;
+var afterMousePositionY=0;
+var camaraStep = 0.1;
 
 var activeAnimation = false;
 
@@ -94,9 +103,14 @@ function main() {
     /** @type {HTMLCanvasElement} */
     canvas = document.getElementById("canvas");
     gl = canvas.getContext("webgl");
+
     if (!gl) {
         return;
     }
+
+    //Canvas events
+    document.onmousemove = handleMouseMove;
+
 
     var createFlattenedVertices = function(gl, vertices) {
         var last;
@@ -588,7 +602,8 @@ function main() {
         object :  objects,
         objectToDraw :  objectsToDraw,
     };
-    changeViewMatrix( [0, -40, 0], [0,0,0]);
+
+    activeFrontCamera();
     requestAnimationFrame(drawScene);
 }
 
@@ -669,15 +684,16 @@ function drawScene( time) {
     requestAnimationFrame(drawScene);
 }
 
-function changeViewMatrix(cameraPosition, target){
+function changeViewMatrix(){
     // Compute the projection matrix
     var fieldOfViewRadians = degToRad(60);
     var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+
     var projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
     // Compute the camera's matrix using look at.
     var up = [0, 0, 1];
-    var cameraMatrix = m4.lookAt(cameraPosition, target, up);
+    var cameraMatrix = m4.lookAt(currentCameraPosition, currentTarget, up);
 
     // Make a view matrix from the camera matrix.
     var viewMatrix = m4.inverse(cameraMatrix);
@@ -685,27 +701,27 @@ function changeViewMatrix(cameraPosition, target){
 }
 
 function activeFrontCamera(){
-    var target = [0, 0, 0];
-    changeViewMatrix ([0, -40, 0], target);
-    //requestAnimationFrame(drawScene);
+    currentTarget = [0, 0, 0];
+    currentCameraPosition = [0, -40, 0];
+    changeViewMatrix ();
 }
 
 function activeIsometric() {
-    var target = [0, 0, 0];
-    changeViewMatrix([-13.5, -12.6, 20.5],target);
-    //requestAnimationFrame(drawScene);
+    currentTarget = [0, 0, 0];
+    currentCameraPosition =[-13.5, -12.6, 20.5];
+    changeViewMatrix();
 }
 
 function activeFirstCamera() {
-    var target = [0, 0, 0];
-    changeViewMatrix([-0, 0.6, 0], target);
-    //requestAnimationFrame(drawScene);
+    currentTarget = [0, 0, 0];
+    currentCameraPosition = [-0, 0.6, 0];
+    changeViewMatrix();
 }
 
 function activeLonShortCamera() {
-    var target = [20, 0, 0];
-    changeViewMatrix([0, -60, 0], target);
-    //requestAnimationFrame(drawScene);
+    currentTarget = [20, 0, 0];
+    currentCameraPosition = [0, -60, 0];
+    changeViewMatrix();
 }
 
 function degToRad(d) {
@@ -748,6 +764,54 @@ function setSliders(value){
 function activeAnimationAction(){
     activeAnimation = document.getElementById("activeAnimation").checked;
     setSliders(0);
+}
+
+function activeCameraRotation() {
+    if (isCameraRotation)
+    {
+        isCameraRotation = false;
+    }else
+    {
+        isCameraRotation = true;
+    }
+}
+
+function handleMouseMove(event) {
+    if (!isCameraRotation ) {
+        return;
+    }
+    moveTarget(event);
+}
+
+function moveTarget(event){
+    var posX = event.clientX;
+    var posY = event.clientY;
+    if( (posX > 0  && posX < gl.canvas.width) && (posY>0  && posY  < gl.canvas.height)) {
+
+    if(event.clientX > afterMousePositionX) {
+        xViewAngle = xViewAngle - camaraStep;
+    }else{
+        xViewAngle = xViewAngle + camaraStep;
+    }
+
+    var x = 100 * Math.cos(xViewAngle);
+    var y = 100 * Math.sin(xViewAngle);
+    currentTarget = [x , y, currentTarget[2]];
+
+    if(event.clientY > afterMousePositionY) {
+        yViewAngle = yViewAngle - camaraStep;
+    }else{
+        yViewAngle = yViewAngle + camaraStep;
+    }
+
+    var y= 100 * Math.cos(yViewAngle);
+    var z = 100 * Math.sin(yViewAngle);
+    currentTarget = [currentTarget[0] , y, z];
+
+        changeViewMatrix ();
+        afterMousePositionX = posX;
+        afterMousePositionY = posY;
+    }
 }
 
 //Start program

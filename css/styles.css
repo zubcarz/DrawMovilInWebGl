@@ -19,6 +19,7 @@ canvas {
     right: 10px;
     top: 20px;
     background: #ffffffaa;
+    padding: 5px;
 }
 
 .slidecontainer {
@@ -54,4 +55,9 @@ canvas {
     height: 25px;
     background: #234E61;
     cursor: pointer;
+}
+
+.highFont {
+    color: #234E61;
+    font-weight: bold;
 }

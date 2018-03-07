@@ -38,6 +38,7 @@
     </canvas>
     <div id="overlay2">
         Animation Active: <input  onclick="activeAnimationAction()" type="checkbox" id="activeAnimation">
+        Camara Mouse Rotation: <input  onclick="activeCameraRotation()" type="checkbox" id="activeCameraRotation">
 
         <div> Speed Node 0 : <span id="speed_node_1"></span><input type="range" min="-100" max="100" value="0" class="slider" id="speed_node_1_range"></div>
         <div> Speed Node 1 : <span id="speed_node_2"></span><input type="range" min="-100" max="100" value="0" class="slider" id="speed_node_2_range"></div>
@@ -58,15 +59,17 @@
         <button type="button" onclick="activeIsometric()">Isometric</button>
         <button type="button" onclick="activeFirstCamera()">First Camera</button>
         <button type="button" onclick="activeLonShortCamera()">Long Shot</button>
-    </div>
+
+        <!--<h4 class="highFont "> ROTATE CAMERA BY DRAG DROP MOUSE</h4>-->
+  </div>
 
 
-    </body>
-    <script src="js/gl-matrix.js"></script>
-    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
-    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-helper.js"></script>
-    <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
-    <script src="https://webglfundamentals.org/webgl/resources/primitives.js"></script>
-    <script src="js/main.js"></script>
+  </body>
+  <script src="js/gl-matrix.js"></script>
+  <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+  <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-helper.js"></script>
+  <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+  <script src="https://webglfundamentals.org/webgl/resources/primitives.js"></script>
+  <script src="js/main.js"></script>
 </html>
 
