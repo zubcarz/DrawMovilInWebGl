@@ -780,10 +780,10 @@ function handleMouseMove(event) {
     if (!isCameraRotation ) {
         return;
     }
-    moveTarget(event);
+    updateCameraView(event);
 }
 
-function moveTarget(event){
+function updateCameraView(event){
     var posX = event.clientX;
     var posY = event.clientY;
     if( (posX > 0  && posX < gl.canvas.width) && (posY>0  && posY  < gl.canvas.height)) {
