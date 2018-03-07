@@ -38,8 +38,6 @@
     </canvas>
     <div id="overlay2">
         Animation Active: <input  onclick="activeAnimationAction()" type="checkbox" id="activeAnimation">
-        <button type="button" onclick="activeFrontCamera()">Front camera</button>
-        <button type="button" onclick="activeIsometric()">Isometric</button>
 
         <div> Speed Node 0 : <span id="speed_node_1"></span><input type="range" min="-100" max="100" value="0" class="slider" id="speed_node_1_range"></div>
         <div> Speed Node 1 : <span id="speed_node_2"></span><input type="range" min="-100" max="100" value="0" class="slider" id="speed_node_2_range"></div>
@@ -56,7 +54,10 @@
                 <div> Rotation 8 : <span id="rotation_8"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_8_range"></div>
                 <div> Rotation 9 : <span id="rotation_9"></span><input type="range" min="-180" max="180" value="0" class="slider" id="rotation_9_range"></div>-->
 
-
+        <button type="button" onclick="activeFrontCamera()">Front camera</button>
+        <button type="button" onclick="activeIsometric()">Isometric</button>
+        <button type="button" onclick="activeFirstCamera()">First Camera</button>
+        <button type="button" onclick="activeLonShortCamera()">Long Shot</button>
     </div>
 
 

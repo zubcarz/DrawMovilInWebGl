@@ -588,7 +588,7 @@ function main() {
         object :  objects,
         objectToDraw :  objectsToDraw,
     };
-    changeViewMatrix( [0, -40, 0]);
+    changeViewMatrix( [0, -40, 0], [0,0,0]);
     requestAnimationFrame(drawScene);
 }
 
@@ -669,14 +669,13 @@ function drawScene( time) {
     requestAnimationFrame(drawScene);
 }
 
-function changeViewMatrix(cameraPosition){
+function changeViewMatrix(cameraPosition, target){
     // Compute the projection matrix
     var fieldOfViewRadians = degToRad(60);
     var aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     var projectionMatrix = m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
 
     // Compute the camera's matrix using look at.
-    var target = [0, 0, 0];
     var up = [0, 0, 1];
     var cameraMatrix = m4.lookAt(cameraPosition, target, up);
 
@@ -686,13 +685,27 @@ function changeViewMatrix(cameraPosition){
 }
 
 function activeFrontCamera(){
-    changeViewMatrix ([0, -40, 0]);
-    requestAnimationFrame(drawScene);
+    var target = [0, 0, 0];
+    changeViewMatrix ([0, -40, 0], target);
+    //requestAnimationFrame(drawScene);
 }
 
 function activeIsometric() {
-    changeViewMatrix([-13.5, -12.6, 20.5]);
-    requestAnimationFrame(drawScene);
+    var target = [0, 0, 0];
+    changeViewMatrix([-13.5, -12.6, 20.5],target);
+    //requestAnimationFrame(drawScene);
+}
+
+function activeFirstCamera() {
+    var target = [0, 0, 0];
+    changeViewMatrix([-0, 0.6, 0], target);
+    //requestAnimationFrame(drawScene);
+}
+
+function activeLonShortCamera() {
+    var target = [20, 0, 0];
+    changeViewMatrix([0, -60, 0], target);
+    //requestAnimationFrame(drawScene);
 }
 
 function degToRad(d) {
