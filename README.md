@@ -1,4 +1,4 @@
 # DrawMovilInWebGl
 View Details of project in:
 
-https://www.notion.so/computacionvisual/WebGL-Cinematica-directa-164f017ede88437ea190fa81908e75ac
+https://www.notion.so/computacionvisualinteractiva/Computacion-Visual-Interactiva-27d655168d414865b05e261f85a74672
